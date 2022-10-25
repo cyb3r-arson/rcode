@@ -1,0 +1,62 @@
+library(readr)
+cluster <- read_csv("C:/3967514_cluster.csv")
+View(cluster) ## to view data
+attach(cluster) ### to show data in console by separate variable 
+
+respondent<-cluster$respondent
+gender<-cluster$gender
+age<-cluster$age
+education<-cluster$education
+area<-cluster$area
+mileage<-cluster$mileage
+power<-cluster$power
+design<-cluster$design
+comfort<-cluster$comfort
+entertainment<-cluster$entertainment
+environment<-cluster$environment
+
+
+
+library(ggplot2)
+
+ggplot(data = cluster, mapping = aes(x=respondent, y=age, fill=age)) +
+  geom_bar(stat="identity")
+
+
+tbl <- with(cluster, table(area, mileage))
+
+barplot(tbl, beside = TRUE, legend = TRUE, xlab='Area', ylab='Milleage')
+
+
+library(ggplot2)
+ggplot(as.data.frame(tbl), aes(factor(mileage), Freq, fill = area)) +     
+  geom_col(position = 'dodge')
+
+
+ggplot(cluster, aes(x = design), fill = design) +
+  geom_bar()
+
+
+
+tbl2 <- with(cluster, table(entertainment, environment))
+
+library(ggplot2)
+ggplot(as.data.frame(tbl2), aes(factor(entertainment), Freq, fill = environment)) +     
+  geom_col(position = 'dodge')
+
+
+
+
+
+tbl2 <- with(cluster, table(entertainment, age))
+
+library(ggplot2)
+ggplot(as.data.frame(tbl2), aes(factor(age), Freq, fill = entertainment)) +     
+  geom_col(position = 'dodge')
+
+
+tbl3 <- with(cluster, table(mileage, comfort))
+
+library(ggplot2)
+ggplot(as.data.frame(tbl3), aes(factor(mileage), Freq, fill = comfort)) +     
+  geom_col(position = 'dodge')
